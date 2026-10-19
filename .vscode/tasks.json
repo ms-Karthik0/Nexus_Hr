@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "NexusHR backend",
+			"type": "shell",
+			"command": "mvn",
+			"args": [
+				"-f",
+				"backend/pom.xml",
+				"spring-boot:run"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

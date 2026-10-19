@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NexusHR | Project Portfolio Documentation</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    :root {
+      --ink: #15243a;
+      --muted: #53657c;
+      --soft: #eff4fa;
+      --line: #d7e0eb;
+      --blue: #2558d8;
+      --indigo: #4c46ca;
+      --teal: #087f8c;
+      --green: #147d56;
+      --amber: #a35b08;
+      --red: #a33a40;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #e8edf4; color: var(--ink); }
+    body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; line-height: 1.42; }
+    .page {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      margin: 8mm auto;
+      padding: 16mm 17mm 18mm;
+      background: #fff;
+      overflow: hidden;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    @media print {
+      html, body { background: #fff; }
+      .page { margin: 0; }
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 3mm; font-size: 22pt; line-height: 1.12; letter-spacing: -.35pt; }
+    h2 { margin: 6mm 0 2mm; font-size: 12pt; line-height: 1.2; color: var(--indigo); }
+    h3 { margin: 4mm 0 1.5mm; font-size: 10pt; }
+    p { margin-bottom: 2.5mm; color: var(--muted); }
+    ul, ol { margin: 1mm 0 3mm; padding-left: 5mm; color: var(--muted); }
+    li { margin: 0 0 1.3mm; }
+    .eyebrow { margin-bottom: 2mm; color: var(--blue); font-size: 8pt; font-weight: 800; letter-spacing: 1.5pt; text-transform: uppercase; }
+    .dek { max-width: 165mm; margin-bottom: 5mm; color: var(--muted); font-size: 10.5pt; }
+    .rule { height: 1px; margin: 4mm 0; border: 0; background: var(--line); }
+    .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8mm; }
+    .page-head .number { padding-top: 1mm; color: #90a1b5; font-size: 8pt; font-weight: 700; letter-spacing: 1pt; }
+    .footer { position: absolute; right: 17mm; bottom: 8mm; left: 17mm; display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 2.3mm; color: #8190a3; font-size: 7.2pt; }
+    .footer strong { color: #52657d; }
+    .callout { margin: 3mm 0; border-left: 3px solid var(--blue); padding: 2mm 3mm; background: #f1f5ff; color: var(--ink); }
+    .callout.warning { border-left-color: var(--amber); background: #fff8ec; }
+    .callout.good { border-left-color: var(--green); background: #eef9f3; }
+    .small { font-size: 8pt; }
+    .tiny { font-size: 7pt; }
+    .muted { color: var(--muted); }
+    .label { color: var(--muted); font-size: 7.2pt; font-weight: 700; letter-spacing: .6pt; text-transform: uppercase; }
+    .badge { display: inline-block; border-radius: 20px; padding: .7mm 2mm; background: #e7efff; color: #224db4; font-size: 7pt; font-weight: 700; white-space: nowrap; }
+    .badge.target { background: #fff1d8; color: #89510f; }
+    .badge.implemented { background: #e3f5ec; color: #176341; }
+    .badge.limit { background: #fae9e9; color: #97353b; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+    .panel { border: 1px solid var(--line); border-radius: 2.5mm; padding: 3.5mm; background: #fff; }
+    .panel.soft { background: #f7f9fc; }
+    .panel h3 { margin-top: 0; }
+    .metric { border-top: 2px solid var(--blue); padding: 2.5mm 2mm; background: #f7f9fc; }
+    .metric b { display: block; color: var(--ink); font-size: 16pt; }
+    .metric span { display: block; color: var(--muted); font-size: 7.7pt; }
+    table { width: 100%; margin: 2mm 0 3mm; border-collapse: collapse; table-layout: fixed; }
+    th { padding: 2.1mm 2mm; background: #eaf0f7; color: #263951; font-size: 7.6pt; text-align: left; vertical-align: top; }
+    td { padding: 2mm; border-bottom: 1px solid var(--line); color: #45586f; font-size: 7.6pt; line-height: 1.33; vertical-align: top; overflow-wrap: anywhere; }
+    tr:last-child td { border-bottom: 0; }
+    .table-tight td, .table-tight th { padding: 1.6mm 1.7mm; font-size: 7.1pt; }
+    .code { font-family: Consolas, "Courier New", monospace; }
+    .architecture { margin: 3mm 0; border: 1px solid #dce4ef; border-radius: 2mm; padding: 2mm; background: #f8fafd; }
+    .architecture svg { display: block; width: 100%; height: auto; }
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin-top: 3mm; }
+    .week { border-top: 3px solid var(--blue); padding: 3mm; background: #f5f8fc; }
+    .week h3 { margin: 0 0 2mm; color: var(--blue); }
+    .week ul { padding-left: 4mm; font-size: 8pt; }
+    .screenshot { display: block; width: 100%; height: auto; border: 1px solid #cad5e2; border-radius: 1.8mm; }
+    figure { margin: 0; }
+    figcaption { margin-top: 1.5mm; color: var(--muted); font-size: 7.4pt; }
+    .image-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 2mm; }
+    .image-pair .screenshot { width: 100%; }
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 22mm 20mm;
+      color: #fff;
+      background: linear-gradient(145deg, #10192d 0%, #162e59 56%, #403aa1 100%);
+    }
+    .cover .eyebrow { color: #a9c2ff; }
+    .cover h1 { max-width: 150mm; margin: 6mm 0 3mm; color: #fff; font-size: 38pt; line-height: 1.03; }
+    .cover .subtitle { max-width: 145mm; color: #dae5fa; font-size: 17pt; line-height: 1.3; }
+    .cover .tagline { max-width: 125mm; margin-top: 9mm; color: #c3d2ea; font-size: 11pt; }
+    .cover-mark { width: 15mm; height: 15mm; display: grid; place-items: center; border: 1px solid #8da4df; border-radius: 4mm; background: #ffffff18; color: #fff; font-size: 16pt; font-weight: 800; }
+    .cover-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm 12mm; border-top: 1px solid #ffffff45; padding-top: 6mm; color: #aebdd4; font-size: 8.5pt; }
+    .cover-meta strong { display: block; margin-top: .8mm; color: #fff; font-size: 10pt; }
+    .cover-note { color: #aebdd4; font-size: 7.5pt; }
+    .screens-hero { margin-top: 2mm; }
+    .screens-hero .screenshot { max-height: 158mm; object-fit: contain; object-position: top center; background: #101827; }
+    .bar-row { display: grid; grid-template-columns: 34mm 1fr 12mm; gap: 2mm; align-items: center; margin: 2mm 0; font-size: 8pt; }
+    .bar { height: 3mm; border-radius: 2mm; background: #e4eaf3; overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--blue); }
+    .contents { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 6mm; }
+    .contents div { display: flex; justify-content: space-between; border-bottom: 1px dotted #c7d2df; padding: 1.4mm 0; color: var(--muted); font-size: 8pt; }
+    .contents b { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+  <section class="page cover">
+    <div>
+      <div class="cover-mark">N</div>
+      <p class="eyebrow" style="margin-top:9mm">Project portfolio • Zidio Development</p>
+      <h1>NexusHR</h1>
+      <div class="subtitle">AI-Enabled Enterprise HR &amp; Workforce Intelligence Platform</div>
+      <p class="tagline">One workforce. Clearer decisions. A unified product concept for employee lifecycle, attendance, payroll, performance, and explainable workforce insights.</p>
+    </div>
+    <div>
+      <div class="cover-meta">
+        <div>Prepared for<strong>Zidio Development · Java Full-Stack Domain</strong></div>
+        <div>Prepared by<strong>Java Full-Stack Engineering Candidate</strong></div>
+        <div>Portfolio edition<strong>Version 2.0 · Industry Edition</strong></div>
+        <div>Document date<strong>18 October 2026</strong></div>
+      </div>
+      <p class="cover-note" style="margin-top:5mm">A source-grounded project overview. Performance targets are distinguished from measured results; deployment artifacts are distinguished from live operations.</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">01 · Product brief</p><h1>Project overview</h1></div><div class="number">02 / 15</div></div>
+    <p class="dek">NexusHR brings daily workforce operations into one role-aware application: a React client, Spring Boot REST services, and relational persistence with a lightweight local-development profile.</p>
+    <div class="grid3">
+      <div class="metric"><b>4</b><span>personas represented in the demo</span></div>
+      <div class="metric"><b>7</b><span>documented functional capability groups</span></div>
+      <div class="metric"><b>1</b><span>integrated HR workspace</span></div>
+    </div>
+    <h2>Vision and objectives</h2>
+    <div class="grid2">
+      <div class="panel soft"><h3>Vision</h3><p>Reduce context switching across people operations by bringing employee records, attendance, leave, payroll, reviews, notifications, and workforce insights into a coherent workspace.</p></div>
+      <div class="panel soft"><h3>Product objectives</h3><ul><li>Digitize lifecycle and approval workflows.</li><li>Make payroll calculations and employee-facing payslips accessible.</li><li>Support role-specific workspaces and self-service actions.</li><li>Present workforce-risk signals with factors and suggested interventions.</li></ul></div>
+    </div>
+    <h2>Users and business value</h2>
+    <table class="table-tight">
+      <thead><tr><th style="width:23%">User group</th><th style="width:38%">Primary use</th><th>Potential value (not yet measured)</th></tr></thead>
+      <tbody>
+        <tr><td>Executive / administrator</td><td>Headcount, payroll summary, governance and security review.</td><td>Faster organization-wide visibility and oversight.</td></tr>
+        <tr><td>HR manager</td><td>Employee records, leave, payroll administration and workforce insights.</td><td>Less manual coordination between people processes.</td></tr>
+        <tr><td>Team manager</td><td>Team attendance, approvals and performance review contributions.</td><td>Clearer team-level follow-up and decision context.</td></tr>
+        <tr><td>Employee</td><td>Personal attendance, payslip, leave requests and review actions.</td><td>More direct access to common HR self-service tasks.</td></tr>
+      </tbody>
+    </table>
+    <h2>Business impact hypotheses</h2>
+    <div class="callout warning"><strong>Targets, not substantiated outcomes.</strong> Existing project materials cite reductions in administrative effort, improved retention and large-organization support. The repository does not contain a customer study, load-test report, or production availability record to validate those claims.</div>
+    <div class="contents">
+      <div><span>Functional scope</span><b>03–04</b></div><div><span>Technology and architecture</span><b>05–06</b></div>
+      <div><span>Delivery and technical practices</span><b>07–09</b></div><div><span>Roles and visual tour</span><b>10–13</b></div>
+      <div><span>Operations and reflection</span><b>14–15</b></div><div><span>Evidence basis</span><b>Repository</b></div>
+    </div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Project overview · 02</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">02 · Capability matrix</p><h1>Key features · People operations</h1></div><div class="number">03 / 15</div></div>
+    <p class="dek">The criteria below describe observable demo behavior. They are acceptance goals for the product, not a claim of enterprise production certification.</p>
+    <table>
+      <thead><tr><th style="width:9%">ID</th><th style="width:23%">Feature</th><th style="width:37%">Description</th><th>Acceptance criteria</th></tr></thead>
+      <tbody>
+        <tr><td><strong>F-01</strong></td><td>Employee lifecycle</td><td>Employee directory, search and profile information, department context, onboarding entry point and lifecycle actions.</td><td>Authorized HR user can find employees, inspect records and start the represented onboarding flow; saved changes remain consistent in the active data source.</td></tr>
+        <tr><td><strong>F-02</strong></td><td>Attendance and leave</td><td>Simulated biometric punch terminal, attendance records, leave application and review queue.</td><td>Employee can submit a punch or leave request; reviewer can process an eligible request; status is visible in the interface.</td></tr>
+        <tr><td><strong>F-03</strong></td><td>Payroll and payslips</td><td>Gross-to-net calculation, batch payroll action, monthly payroll register and employee payslip view.</td><td>Payroll totals reconcile against configured formulas; payroll action and printable/downloadable payslip are available to permitted roles.</td></tr>
+      </tbody>
+    </table>
+    <h2>Illustrative payroll formula</h2>
+    <div class="panel soft">
+      <p class="code" style="font-size:9pt;color:#263951"><strong>Gross</strong> = Base salary + 40% HRA + 15% allowances</p>
+      <p class="code" style="font-size:9pt;color:#263951"><strong>Net</strong> = Gross − 12% PF − 10% TDS − $150 insurance deduction</p>
+      <p class="small">The formula reflects the project’s documented demo rules. Tax and statutory calculations require jurisdiction-specific review before real payroll use.</p>
+    </div>
+    <h2>Business workflow snapshots</h2>
+    <div class="grid3">
+      <div class="panel"><div class="label">Employee record</div><h3>Find → review → update</h3><p class="small">Directory controls and employee cards make sample workforce data browsable.</p></div>
+      <div class="panel"><div class="label">Leave request</div><h3>Apply → approve</h3><p class="small">A request has an employee, leave dates, reason, status and reviewer context.</p></div>
+      <div class="panel"><div class="label">Payroll run</div><h3>Calculate → inspect</h3><p class="small">The payroll register summarizes pay-period values for demo employees.</p></div>
+    </div>
+    <h2>Acceptance review checklist</h2>
+    <table class="table-tight">
+      <thead><tr><th style="width:25%">Check</th><th style="width:48%">Expected result</th><th>Evidence needed for release</th></tr></thead>
+      <tbody>
+        <tr><td>Authorization</td><td>Disallowed roles cannot invoke restricted mutation endpoints.</td><td>Controller tests and authorization integration tests.</td></tr>
+        <tr><td>Data integrity</td><td>Payroll totals and approval transitions remain consistent after reload.</td><td>Automated domain tests against a persistent test database.</td></tr>
+        <tr><td>Usability</td><td>Core employee and manager tasks complete without hidden role changes.</td><td>Keyboard and browser-based workflow testing.</td></tr>
+      </tbody>
+    </table>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Features · 03</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">02 · Capability matrix</p><h1>Key features · Insight and communication</h1></div><div class="number">04 / 15</div></div>
+    <table>
+      <thead><tr><th style="width:9%">ID</th><th style="width:22%">Feature</th><th style="width:39%">Description</th><th>Acceptance criteria</th></tr></thead>
+      <tbody>
+        <tr><td><strong>F-04</strong></td><td>Performance 360</td><td>Review records, weighted score dimensions, manager feedback and goal completion context.</td><td>Scorecard presents technical (40%), leadership (30%) and delivery (30%) dimensions; completed review data can be inspected.</td></tr>
+        <tr><td><strong>F-05</strong></td><td>Workforce intelligence</td><td>Rule-based attrition risk score, explanatory factors, suggested interventions and a skill-gap benchmark view.</td><td>Each result includes a risk band and rationale. Treat as a demo heuristic—not a validated predictive model.</td></tr>
+        <tr><td><strong>F-06</strong></td><td>Executive dashboard</td><td>Top-line workforce, attendance, payroll and engagement indicators with navigation to operational views.</td><td>Dashboard loads representative data and supports a user journey into relevant modules; export behavior is clearly identified.</td></tr>
+        <tr><td><strong>F-07</strong></td><td>Notifications</td><td>In-app notification drawer with unread state and workflow-oriented messages; WebSocket configuration is present in the backend.</td><td>Authorized user can view notifications and mark an item read; live delivery requires end-to-end messaging tests.</td></tr>
+      </tbody>
+    </table>
+    <h2>What “AI” means in this implementation</h2>
+    <div class="callout"><strong>Explainable rules, not a trained model.</strong> The inspected service computes risk using fixed rules for engagement, tenure, compensation and in-demand skills. A confidence value of 88.4 is assigned in source code; this is not evidence of benchmark validation or measured predictive accuracy.</div>
+    <div class="grid2">
+      <div class="panel soft"><h3>Useful demo behavior</h3><ul><li>Risk score is capped to a bounded range.</li><li>Results are classified as low, medium or high.</li><li>Risk factors and interventions accompany each result.</li><li>Skill targets and current proficiency values produce gap bands.</li></ul></div>
+      <div class="panel soft"><h3>Before operational use</h3><ul><li>Define a lawful, representative training and evaluation dataset.</li><li>Measure precision, recall, calibration and subgroup effects.</li><li>Document human review and contestability.</li><li>Review privacy, labor and employment-law obligations.</li></ul></div>
+    </div>
+    <h2>Business value hypotheses</h2>
+    <table class="table-tight">
+      <thead><tr><th style="width:28%">Capability</th><th style="width:35%">Potential benefit</th><th>Evidence required</th></tr></thead>
+      <tbody>
+        <tr><td>Employee self-service</td><td>Fewer routine HR status requests.</td><td>Baseline request volume and post-launch comparison.</td></tr>
+        <tr><td>Workflow visibility</td><td>More timely leave and review decisions.</td><td>Cycle-time and backlog measurements.</td></tr>
+        <tr><td>Workforce indicators</td><td>Earlier, more structured manager conversations.</td><td>Human-reviewed intervention study; no automated employment decisions.</td></tr>
+      </tbody>
+    </table>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Features · 04</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">03 · Implementation choices</p><h1>Technology stack</h1></div><div class="number">05 / 15</div></div>
+    <p class="dek">The repository separates the React user interface from the Spring Boot API and supports a lightweight developer profile alongside container-oriented deployment configuration.</p>
+    <table>
+      <thead><tr><th style="width:20%">Category</th><th style="width:28%">Technology</th><th style="width:32%">Rationale in this project</th><th>Alternative / note</th></tr></thead>
+      <tbody>
+        <tr><td>Language / runtime</td><td>Java 21 target; Maven 3.9+</td><td>Typed backend services and a standard Maven build. CI config selects Temurin 21.</td><td>Java 24 was also used locally; supported runtime should be pinned to CI target.</td></tr>
+        <tr><td>Backend framework</td><td>Spring Boot 3.3.4</td><td>REST controllers, dependency injection, persistence and service composition.</td><td>Micronaut or Quarkus are alternatives for different runtime/startup constraints.</td></tr>
+        <tr><td>Security</td><td>Spring Security 6; JJWT</td><td>Stateless bearer-token filter, BCrypt encoder and method-level role checks.</td><td>External OIDC provider recommended for production identity lifecycle.</td></tr>
+        <tr><td>Data access</td><td>Spring Data JPA / Hibernate 6</td><td>Repository abstractions map HR domain entities to relational storage.</td><td>JDBC/jOOQ can suit explicit SQL and reporting-heavy query paths.</td></tr>
+        <tr><td>Local database</td><td>H2 (dev profile)</td><td>Fast setup for evaluation and local development.</td><td>PostgreSQL is configured for production profile; validate schema behavior across both.</td></tr>
+        <tr><td>Production database</td><td>PostgreSQL 17 (Docker Compose)</td><td>Relational persistence with transactions and durable volume in Compose.</td><td>Managed PostgreSQL preferred for backups, failover and operational support.</td></tr>
+        <tr><td>Frontend</td><td>React 19, TypeScript, Vite</td><td>Component UI with static build and development server.</td><td>Next.js or Remix could add server rendering and route-level data loading.</td></tr>
+        <tr><td>Styling / icons</td><td>Tailwind CSS v4; Lucide React</td><td>Utility-first styling and consistent icon set already used by the UI.</td><td>Design-system tokens and component library can increase consistency.</td></tr>
+        <tr><td>Containers</td><td>Docker; Docker Compose</td><td>Backend, frontend, PostgreSQL and Redis service definitions are provided.</td><td>Kubernetes manifests are a separate deployment option, not proof of a running cluster.</td></tr>
+        <tr><td>Operations</td><td>GitHub Actions; Prometheus config</td><td>Build/test workflow and scrape targets are checked into the project.</td><td>Metrics exporters, alert rules, dashboards and deployment stages need verification.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warning"><strong>Configuration audit note.</strong> Redis is provisioned in Compose, but the inspected application configuration does not establish a Redis-backed cache/session path. The Prometheus file lists PostgreSQL and Redis exporter targets; exporter services are not defined in the reviewed Compose file.</div>
+    <h2>Build and delivery commands</h2>
+    <div class="panel soft code small">
+      <div><strong>Backend:</strong> <code>cd backend &amp;&amp; mvn clean test</code></div>
+      <div style="margin-top:2mm"><strong>Frontend:</strong> <code>cd frontend &amp;&amp; npm ci &amp;&amp; npm run build</code></div>
+      <div style="margin-top:2mm"><strong>Local stack:</strong> <code>docker compose up --build</code></div>
+    </div>
+    <p class="tiny" style="margin-top:3mm">Versions and capabilities above are based on the checked-in Maven, npm, Docker Compose and GitHub Actions files. Alternatives are contextual examples, not implemented components.</p>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Technology stack · 05</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">04 · System design</p><h1>Architecture at a glance</h1></div><div class="number">06 / 15</div></div>
+    <p class="dek">A browser client calls a single Spring Boot API surface. Controllers delegate to domain services and repositories; the active profile selects the database configuration.</p>
+    <div class="architecture">
+      <svg viewBox="0 0 760 540" role="img" aria-label="NexusHR architecture diagram">
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#59708b"/></marker>
+          <style>
+            .box{fill:#fff;stroke:#9eafc4;stroke-width:1.5}.client{fill:#eef3ff;stroke:#6682df}.api{fill:#f3f3ff;stroke:#7067d5}.domain{fill:#edf8f7;stroke:#298991}.data{fill:#f5f7fa;stroke:#8597ab}.label{font:700 15px Arial;fill:#203450}.sub{font:12px Arial;fill:#52667e}.arrow{stroke:#59708b;stroke-width:1.8;marker-end:url(#arrow)}.note{font:12px Arial;fill:#45627c}
+          </style>
+        </defs>
+        <rect x="190" y="15" width="380" height="77" rx="12" class="box client"/>
+        <text x="380" y="44" text-anchor="middle" class="label">Browser application</text>
+        <text x="380" y="67" text-anchor="middle" class="sub">React 19 · TypeScript · Vite · Tailwind CSS</text>
+        <line x1="380" y1="92" x2="380" y2="135" class="arrow"/>
+        <text x="393" y="119" class="note">HTTP REST · JSON · bearer token</text>
+        <rect x="100" y="138" width="560" height="82" rx="12" class="box api"/>
+        <text x="380" y="169" text-anchor="middle" class="label">Spring Boot API · /api</text>
+        <text x="380" y="193" text-anchor="middle" class="sub">Spring Security · JWT filter · CORS · method-level authorization</text>
+        <line x1="380" y1="220" x2="380" y2="254" class="arrow"/>
+        <rect x="100" y="257" width="560" height="61" rx="10" class="box"/>
+        <text x="380" y="282" text-anchor="middle" class="label">REST controllers · request DTO validation</text>
+        <text x="380" y="302" text-anchor="middle" class="sub">Auth · employees · attendance · leave · payroll · performance · AI · notifications</text>
+        <line x1="380" y1="318" x2="380" y2="349" class="arrow"/>
+        <rect x="100" y="352" width="560" height="66" rx="10" class="box domain"/>
+        <text x="380" y="379" text-anchor="middle" class="label">Domain services</text>
+        <text x="380" y="401" text-anchor="middle" class="sub">Workflow orchestration · calculations · heuristic workforce scoring</text>
+        <line x1="380" y1="418" x2="380" y2="451" class="arrow"/>
+        <rect x="145" y="454" width="220" height="65" rx="10" class="box data"/>
+        <text x="255" y="480" text-anchor="middle" class="label">Repositories / JPA</text>
+        <text x="255" y="501" text-anchor="middle" class="sub">Hibernate entity mapping</text>
+        <line x1="365" y1="486" x2="421" y2="486" class="arrow"/>
+        <rect x="425" y="454" width="190" height="65" rx="10" class="box data"/>
+        <text x="520" y="480" text-anchor="middle" class="label">Relational store</text>
+        <text x="520" y="501" text-anchor="middle" class="sub">H2 dev · PostgreSQL prod</text>
+      </svg>
+    </div>
+    <h2>Request path</h2>
+    <div class="grid3">
+      <div class="panel soft"><div class="label">01 · Authenticate</div><h3>Login endpoint</h3><p class="small">Credential check returns user identity and token data; the web client stores session details locally.</p></div>
+      <div class="panel soft"><div class="label">02 · Authorize</div><h3>Security boundary</h3><p class="small">A JWT filter populates the security context; controller method annotations apply role rules.</p></div>
+      <div class="panel soft"><div class="label">03 · Persist</div><h3>Domain service</h3><p class="small">Typed repositories and JPA entities implement persistence and business workflows.</p></div>
+    </div>
+    <h2>Architecture boundaries to preserve</h2>
+    <ul><li>Keep role decisions server-enforced; client-side menu filtering is not a security boundary.</li><li>Keep the demo heuristic separate from any future trained-model inference service.</li><li>Externalize secrets and environment-specific origins before shared or public deployment.</li></ul>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Architecture · 06</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">05 · Delivery plan</p><h1>Execution timeline</h1></div><div class="number">07 / 15</div></div>
+    <p class="dek">A four-week delivery outline adapted from the project’s existing documentation. It is a proposed/reconstructed plan; commit history was not available to validate actual dates or durations.</p>
+    <div class="timeline">
+      <div class="week"><h3>Week 1 · Foundation</h3><div class="label">Days 1–7</div><ul><li>Confirm HR use cases and role boundaries.</li><li>Bootstrap Spring Boot and Maven.</li><li>Model users, employees and departments.</li><li>Implement authentication and persistence.</li></ul><div class="badge">Checkpoint · login + entities</div></div>
+      <div class="week"><h3>Week 2 · Workflows</h3><div class="label">Days 8–14</div><ul><li>Build React shell and navigation.</li><li>Implement employee and attendance views.</li><li>Add leave requests and approval flows.</li><li>Deliver payroll and review screens.</li></ul><div class="badge">Checkpoint · core workflows</div></div>
+      <div class="week"><h3>Week 3 · Insights</h3><div class="label">Days 15–21</div><ul><li>Add dashboard metrics and notifications.</li><li>Implement explainable risk rules.</li><li>Add skills benchmark comparison.</li><li>Review role-specific navigation.</li></ul><div class="badge">Checkpoint · integrated demo</div></div>
+      <div class="week"><h3>Week 4 · Release</h3><div class="label">Days 22–28</div><ul><li>Containerize backend and frontend.</li><li>Exercise CI tests and production build.</li><li>Review Kubernetes and monitoring config.</li><li>Capture visuals and complete documentation.</li></ul><div class="badge">Checkpoint · portfolio release</div></div>
+    </div>
+    <h2>Milestones and exit criteria</h2>
+    <table class="table-tight">
+      <thead><tr><th style="width:18%">Milestone</th><th style="width:45%">Exit criteria</th><th>Evidence to retain</th></tr></thead>
+      <tbody>
+        <tr><td>M1 · Foundation</td><td>Developer can start the app; login and seeded sample records are available.</td><td>Setup guide, startup check, auth tests.</td></tr>
+        <tr><td>M2 · Workflows</td><td>Employee, attendance, leave and payroll tasks work through the UI and API.</td><td>Workflow tests and API examples.</td></tr>
+        <tr><td>M3 · Insights</td><td>Dashboard, rule explanations and notification states are visible.</td><td>Known-input tests and screenshot evidence.</td></tr>
+        <tr><td>M4 · Release</td><td>CI checks pass; deployment artifacts are reviewed; limitations are stated.</td><td>Build logs, container scan, runbook, release checklist.</td></tr>
+      </tbody>
+    </table>
+    <h2>Checkpoints to add to a real plan</h2>
+    <div class="grid2">
+      <div class="panel soft"><h3>Risk / privacy review</h3><p class="small">Before loading employee data: approve data inventory, retention, access, encryption, incident response and lawful-use basis.</p></div>
+      <div class="panel soft"><h3>Go-live readiness</h3><p class="small">Before production: test recovery, database migration, concurrency, accessibility, audit events and rollback procedure.</p></div>
+    </div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Execution timeline · 07</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">06 · Engineering practices</p><h1>Technical highlights · Security</h1></div><div class="number">08 / 15</div></div>
+    <p class="dek">The implementation contains foundational controls, but the project should be treated as an evaluation/demo application until a security review and deployment hardening are complete.</p>
+    <table class="table-tight">
+      <thead><tr><th style="width:18%">Control area</th><th style="width:39%">Repository evidence</th><th>Practical assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Identity</td><td>Spring Security authentication manager; BCrypt password encoder; JWT access and refresh token paths.</td><td>Present in code. Rotate secrets and add key management, token revocation/rotation policy and abuse controls.</td></tr>
+        <tr><td>Authorization</td><td>Method security enabled; controllers use <code>@PreAuthorize</code> for selected actions.</td><td>Promising server-side boundary; audit every controller and every object-level ownership check.</td></tr>
+        <tr><td>Input handling</td><td>Request DTOs and Jakarta validation are used on selected controller inputs; JPA repositories structure data access.</td><td>Validate every endpoint and enforce business invariants at the service layer; test malformed and oversized inputs.</td></tr>
+        <tr><td>Transport / CORS</td><td>CORS bean accepts wildcard origin patterns with credentials; application YAML also declares an origin list.</td><td>Configuration mismatch / broad policy risk. Use a single explicit allowlist and verify effective browser policy.</td></tr>
+        <tr><td>CSRF / sessions</td><td>CSRF is disabled and Spring sessions are stateless.</td><td>Appropriate only for a correctly managed bearer-token API; protect browser token storage and review XSS exposure.</td></tr>
+        <tr><td>Secrets</td><td>JWT secret appears in application YAML; Compose includes a sample database password. K8s references a Secret for DB credentials.</td><td>Do not reuse committed values. Rotate, remove from source control, and inject through a secret manager.</td></tr>
+        <tr><td>Abuse controls</td><td>No rate-limiting implementation was identified in reviewed configuration.</td><td>Add login throttling, request limits, account lockout policy and monitoring before exposure.</td></tr>
+        <tr><td>Logging / audit</td><td>Security/audit UI and Prometheus scrape configuration exist in the project.</td><td>Verify immutable event capture, sensitive-data redaction, retention and alert response. UI labels alone are not audit evidence.</td></tr>
+      </tbody>
+    </table>
+    <h2>OWASP-oriented threat checklist</h2>
+    <div class="grid2">
+      <div class="panel soft"><h3>Access and injection</h3><ul><li>Test horizontal and vertical privilege boundaries.</li><li>Verify resource ownership on reads and updates.</li><li>Prefer parameterized persistence; test validation and error paths.</li><li>Do not rely on hidden navigation to authorize API access.</li></ul></div>
+      <div class="panel soft"><h3>Secrets and availability</h3><ul><li>Rotate demo and signing credentials before deployment.</li><li>Limit CORS to reviewed client origins.</li><li>Add login rate limits and security event alerts.</li><li>Use TLS, backups, restore drills and dependency scanning.</li></ul></div>
+    </div>
+    <div class="callout warning"><strong>Public-demo warning.</strong> Demo credentials, H2 Console settings and any checked-in signing keys must be treated as unsafe for a public or shared deployment. Replace and rotate them first.</div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Security · 08</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">06 · Engineering practices</p><h1>Performance and scalability</h1></div><div class="number">09 / 15</div></div>
+    <p class="dek">The materials specify ambitious service objectives and include horizontal-scaling configuration. No reproducible load-test results, measured latency distributions, or production uptime evidence were found in the repository.</p>
+    <table>
+      <thead><tr><th style="width:26%">Measure</th><th style="width:24%">Documented target</th><th style="width:23%">Verified evidence</th><th>Next validation</th></tr></thead>
+      <tbody>
+        <tr><td>Core API latency</td><td>&lt; 300 ms</td><td><span class="badge target">Target only</span></td><td>Publish environment, dataset, request mix, p50/p95/p99, error rate and run duration.</td></tr>
+        <tr><td>Dashboard load</td><td>&lt; 2 s</td><td><span class="badge target">Target only</span></td><td>Measure cold/warm load on agreed device, network, browser and data volume.</td></tr>
+        <tr><td>Concurrent users</td><td>10,000+ cited in report</td><td><span class="badge limit">Not load-tested</span></td><td>Run staged load tests; inspect database pools, query plans, CPU and memory.</td></tr>
+        <tr><td>Availability</td><td>99.95% cited in report</td><td><span class="badge limit">Not measured</span></td><td>Define SLO window, deploy multi-zone dependencies, and collect uptime history.</td></tr>
+        <tr><td>Attrition accuracy</td><td>Above 80% cited in report</td><td><span class="badge limit">Not validated</span></td><td>Independent, leakage-safe evaluation on representative labeled outcomes.</td></tr>
+      </tbody>
+    </table>
+    <h2>Scaling provisions present in configuration</h2>
+    <div class="grid3">
+      <div class="panel soft"><div class="label">Kubernetes</div><h3>3 backend replicas</h3><p class="small">Deployment requests 250m CPU / 512 MiB and caps at 1 CPU / 1 GiB.</p></div>
+      <div class="panel soft"><div class="label">Horizontal autoscaling</div><h3>2–10 replicas</h3><p class="small">HPA targets average 70% CPU and 80% memory utilization.</p></div>
+      <div class="panel soft"><div class="label">Probes</div><h3>Readiness / liveness</h3><p class="small">Manifest calls <code>/api/public/health</code>; validate endpoint response and startup timings.</p></div>
+    </div>
+    <h2>Performance improvement plan</h2>
+    <div class="bar-row"><span>Measure first</span><div class="bar"><i style="width:100%"></i></div><span>01</span></div>
+    <div class="bar-row"><span>Optimize queries</span><div class="bar"><i style="width:82%"></i></div><span>02</span></div>
+    <div class="bar-row"><span>Cache selectively</span><div class="bar"><i style="width:64%"></i></div><span>03</span></div>
+    <div class="bar-row"><span>Load-test / tune</span><div class="bar"><i style="width:45%"></i></div><span>04</span></div>
+    <p class="tiny">The bars indicate recommended sequence only; they are not measured performance or completion percentages.</p>
+    <h2>Likely bottlenecks to investigate</h2>
+    <ul><li>Attrition analysis loads the employee collection and evaluates each employee in application memory.</li><li>Dashboard and directory endpoints should be profiled for N+1 entity loading and pagination needs.</li><li>Large payroll batches need transaction sizing, idempotency, locking and failure-recovery tests.</li><li>Horizontal replicas require stateless operation, shared durable storage and consistent signing keys.</li></ul>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Performance · 09</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">07 · Authentication experience</p><h1>Role-based access and user journeys</h1></div><div class="number">10 / 15</div></div>
+    <p class="dek">The sign-in experience offers four account choices. A successful authentication should determine the account role; switching personas requires signing out and signing in with a different account.</p>
+    <table class="table-tight">
+      <thead><tr><th style="width:20%">Role</th><th style="width:33%">Representative journey</th><th style="width:28%">UI navigation available</th><th>Server checks</th></tr></thead>
+      <tbody>
+        <tr><td>Executive Admin</td><td>Review workforce overview → inspect payroll → audit controls.</td><td>Dashboard, employees, attendance, leave, payroll, performance, AI, security.</td><td>Controller-level authorization annotations apply to selected operations.</td></tr>
+        <tr><td>HR Manager</td><td>Find employee → review leave → check pay and retention indicators.</td><td>HR operational modules and governance views.</td><td>Role authority checked by backend where configured.</td></tr>
+        <tr><td>Team Manager</td><td>Review team attendance → approve leave → contribute performance feedback.</td><td>Team-oriented modules; some admin-oriented views are hidden.</td><td>Object ownership / team scoping should be tested for every endpoint.</td></tr>
+        <tr><td>Employee</td><td>Check personal time → submit leave → view payslip and review.</td><td>Self-service modules and personal actions.</td><td>Self-only record access must be enforced server-side.</td></tr>
+      </tbody>
+    </table>
+    <h2>Authentication path</h2>
+    <div class="architecture">
+      <svg viewBox="0 0 760 175" role="img" aria-label="Authentication flow">
+        <defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#59708b"/></marker></defs>
+        <g font-family="Arial" text-anchor="middle">
+          <rect x="10" y="40" width="130" height="72" rx="9" fill="#eef3ff" stroke="#6682df"/><text x="75" y="68" font-size="14" font-weight="700" fill="#203450">Choose role</text><text x="75" y="89" font-size="11" fill="#52667e">account selection</text>
+          <rect x="165" y="40" width="130" height="72" rx="9" fill="#f7f9fc" stroke="#9eafc4"/><text x="230" y="68" font-size="14" font-weight="700" fill="#203450">Submit email</text><text x="230" y="89" font-size="11" fill="#52667e">and password</text>
+          <rect x="320" y="40" width="130" height="72" rx="9" fill="#f3f3ff" stroke="#7067d5"/><text x="385" y="68" font-size="14" font-weight="700" fill="#203450">Backend auth</text><text x="385" y="89" font-size="11" fill="#52667e">Spring Security</text>
+          <rect x="475" y="40" width="130" height="72" rx="9" fill="#edf8f7" stroke="#298991"/><text x="540" y="68" font-size="14" font-weight="700" fill="#203450">Token response</text><text x="540" y="89" font-size="11" fill="#52667e">role + identity</text>
+          <rect x="630" y="40" width="120" height="72" rx="9" fill="#eef3ff" stroke="#6682df"/><text x="690" y="68" font-size="14" font-weight="700" fill="#203450">Dashboard</text><text x="690" y="89" font-size="11" fill="#52667e">role-filtered UI</text>
+        </g>
+        <g stroke="#59708b" stroke-width="2" marker-end="url(#arr2)"><line x1="140" y1="76" x2="160" y2="76"/><line x1="295" y1="76" x2="315" y2="76"/><line x1="450" y1="76" x2="470" y2="76"/><line x1="605" y1="76" x2="625" y2="76"/></g>
+        <text x="380" y="152" text-anchor="middle" font-family="Arial" font-size="11" fill="#53657c">Sign out clears browser session data and returns to the login screen.</text>
+      </svg>
+    </div>
+    <h2>Demo account handling</h2>
+    <div class="callout warning"><strong>Evaluation accounts only.</strong> Accounts and passwords documented by the project are hard-coded sample credentials in demo setup. Do not publish or reuse them on a publicly reachable deployment; replace seeded passwords and rotate signing/database secrets.</div>
+    <p class="small">When the API is unreachable, the frontend contains a demo-account fallback. That fallback is for local evaluation and is not an identity provider. A production release should fail closed, use a controlled identity service, and avoid storing bearer credentials in browser local storage.</p>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Identity and roles · 10</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">08 · Product visual tour</p><h1>Visual 01 · Sign-in experience</h1></div><div class="number">11 / 15</div></div>
+    <p class="dek">Captured from the running NexusHR frontend on 18 October 2026. This is a real application screenshot, not a design mockup.</p>
+    <figure class="screens-hero">
+      <img class="screenshot" src="nexushr-login-capture.png" alt="NexusHR sign-in page with four role selections and email/password form">
+      <figcaption><strong>Figure 1.</strong> Role selection and email/password login. The demo UI identifies sample credentials and routes users to their authenticated persona.</figcaption>
+    </figure>
+    <h2>Visual observations</h2>
+    <div class="grid3">
+      <div class="panel soft"><h3>Choice before credentials</h3><p class="small">Four role cards establish the intended access context before login.</p></div>
+      <div class="panel soft"><h3>Desktop / responsive</h3><p class="small">The split hero collapses to a compact brand header at smaller widths.</p></div>
+      <div class="panel soft"><h3>Demo disclosure</h3><p class="small">The screen labels role accounts as demo accounts and shows the selected demo password.</p></div>
+    </div>
+    <div class="callout"><strong>Portfolio capture note:</strong> this screenshot was rendered from the app running locally. It does not represent a deployed public service or production user data.</div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Visual tour · 11</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">08 · Product visual tour</p><h1>Visual 02 · Workforce dashboard</h1></div><div class="number">12 / 15</div></div>
+    <p class="dek">The dashboard screenshot shows the role-aware navigation, workforce KPI cards, a simulated punch terminal, and rule-based attrition insights.</p>
+    <figure class="screens-hero">
+      <img class="screenshot" src="nexushr-dashboard-capture.png" alt="NexusHR workforce intelligence dashboard with KPI cards and modules">
+      <figcaption><strong>Figure 2.</strong> Admin dashboard captured from the running application using seeded/demo data. Values are illustrative application data and not operational metrics.</figcaption>
+    </figure>
+    <h2>How to read the dashboard</h2>
+    <div class="grid2">
+      <div class="panel soft"><h3>Summary cards</h3><p class="small">Headcount, attendance, payroll and engagement/attrition data summarize sample records for the selected period.</p></div>
+      <div class="panel soft"><h3>Action modules</h3><p class="small">The lower dashboard exposes common tasks and navigation into attendance, AI analysis and department views.</p></div>
+    </div>
+    <div class="callout warning"><strong>Interpretation.</strong> “Real-time” and “AI confidence” labels in the demo UI describe the intended feature experience; they should not be read as service-level or model-validation evidence.</div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Visual tour · 12</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">08 · Product visual tour</p><h1>Visual 03 · Employee directory</h1></div><div class="number">13 / 15</div></div>
+    <p class="dek">The employee directory is a browsable view of the seeded workforce, with search, department filtering and employee cards.</p>
+    <figure class="screens-hero">
+      <img class="screenshot" src="nexushr-employees-capture.png" alt="NexusHR employee directory with searchable employee cards">
+      <figcaption><strong>Figure 3.</strong> Employee directory. The capture displays demo records and should not be populated with real employee data until privacy controls are reviewed.</figcaption>
+    </figure>
+    <div class="grid2" style="margin-top:4mm">
+      <div class="panel soft"><h3>Useful next step</h3><p class="small">Add pagination, explicit empty/error states and field-level access control before connecting larger datasets.</p></div>
+      <div class="panel soft"><h3>Privacy requirement</h3><p class="small">Minimize personal details in search results; log sensitive record access and define retention rules.</p></div>
+    </div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Visual tour · 13</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">08 · Product visual tour</p><h1>Visual 04–05 · Payroll and AI insights</h1></div><div class="number">14 / 15</div></div>
+    <p class="dek">Two complementary views: payroll arithmetic and a rule-explanation interface for workforce risk review.</p>
+    <div class="image-pair">
+      <figure>
+        <img class="screenshot" src="nexushr-payroll-capture.png" alt="NexusHR payroll register with pay totals and payslip actions">
+        <figcaption><strong>Figure 4.</strong> Payroll register · seeded pay period.</figcaption>
+      </figure>
+      <figure>
+        <img class="screenshot" src="nexushr-ai-insights-capture.png" alt="NexusHR AI workforce intelligence screen with risk signals and explanations">
+        <figcaption><strong>Figure 5.</strong> Workforce insights · rule-based demonstration.</figcaption>
+      </figure>
+    </div>
+    <div class="image-pair" style="margin-top:3mm">
+      <figure>
+        <img class="screenshot" src="nexushr-attendance-capture.png" alt="NexusHR attendance console and verification log">
+        <figcaption><strong>Figure 6.</strong> Attendance console · simulated punches and sample log.</figcaption>
+      </figure>
+      <figure>
+        <img class="screenshot" src="nexushr-leaves-capture.png" alt="NexusHR leave balance cards and approval queue">
+        <figcaption><strong>Figure 7.</strong> Leave workflow · sample balances and approval queue.</figcaption>
+      </figure>
+    </div>
+    <h2>Interpretation and safeguards</h2>
+    <div class="grid2">
+      <div class="panel soft"><h3>Payroll is a demonstration</h3><p class="small">Validate local tax, benefits, rounding, currency, approvals and audit requirements before handling actual compensation.</p></div>
+      <div class="panel soft"><h3>Risk scores need governance</h3><p class="small">Human review, bias evaluation, model documentation and employee recourse are prerequisites for any consequential use.</p></div>
+    </div>
+    <div class="callout warning"><strong>Important:</strong> application-rendered values and labels are sample outputs. Do not present the shown model accuracy, payroll figures or retention flags as independently audited facts.</div>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Visual tour · 14</span></div>
+  </section>
+
+  <section class="page">
+    <div class="page-head"><div><p class="eyebrow">09 · Release and reflection</p><h1>Deployment, verification and roadmap</h1></div><div class="number">15 / 15</div></div>
+    <p class="dek">NexusHR includes local, container and Kubernetes deployment artifacts. The reviewed repository does not identify a cloud host or prove a live production deployment.</p>
+    <h2>Deployment and operations</h2>
+    <table class="table-tight">
+      <thead><tr><th style="width:21%">Area</th><th style="width:47%">Present in repository</th><th>Operational status / follow-up</th></tr></thead>
+      <tbody>
+        <tr><td>Local development</td><td>Spring Boot + H2 and Vite development server.</td><td>Suitable for demo; use environment-aware ports and proxy config.</td></tr>
+        <tr><td>Docker Compose</td><td>Frontend, backend, PostgreSQL 17 and Redis 7 services.</td><td>Configuration only. Validate image builds, secrets, readiness and persistent recovery.</td></tr>
+        <tr><td>Kubernetes</td><td>Backend deployment/service, HPA and frontend deployment manifests.</td><td>Not evidence of a deployed cluster. Verify ingress, secrets, migrations and rollback.</td></tr>
+        <tr><td>CI/CD</td><td>GitHub Actions runs Maven tests, frontend build and Docker build on main.</td><td>No registry publish or deployment step was seen in the reviewed workflow.</td></tr>
+        <tr><td>Monitoring</td><td>Prometheus scrape configuration names app, PostgreSQL and Redis targets.</td><td>Confirm endpoint exposure, exporter services, dashboards, alerts and runbooks.</td></tr>
+        <tr><td>Health checks</td><td>Kubernetes readiness/liveness probes call <code>/api/public/health</code>.</td><td>Confirm status semantics, timeout behavior and dependencies before rollout.</td></tr>
+      </tbody>
+    </table>
+    <h2>Validation performed for this portfolio</h2>
+    <ul><li>Frontend production build and TypeScript compilation completed successfully during the login-page work.</li><li>Browser walkthrough confirmed role sign-in and sign-out returning to the login page.</li><li>Dashboard, employee directory, payroll, and AI insights screenshots were captured from the running local application.</li><li>No load test, security penetration test or production deployment was performed for this document.</li></ul>
+    <h2>Reflection and next steps</h2>
+    <div class="grid2">
+      <div class="panel soft"><h3>Engineering learnings</h3><ul><li>End-to-end role flows are easier to reason about when demo persona switching is replaced with authentication.</li><li>Targets should be documented separately from measured outcomes.</li><li>Security posture depends on effective configuration, not only framework defaults.</li></ul></div>
+      <div class="panel soft"><h3>Roadmap</h3><ol><li>External identity, key management, strict CORS and throttling.</li><li>Persistent test database, API authorization tests and CI security scanning.</li><li>Payroll jurisdiction review, audit retention and accessible UI tests.</li><li>Reproducible performance plan; model evaluation and human governance.</li><li>Production runbook, recovery test, alerting and real deployment evidence.</li></ol></div>
+    </div>
+    <div class="callout good"><strong>Closing note.</strong> NexusHR is a broad, visually demonstrable HR platform concept with a clear path from local prototype to a production-ready system—provided that identity, privacy, correctness, performance and operational controls are validated before real employee use.</div>
+    <p class="tiny">Source basis: project README and docs; frontend package, authentication, API and UI modules; backend Spring Security, authentication and AI service; Docker Compose; GitHub Actions; Kubernetes and Prometheus configuration. Reviewed 18 October 2026.</p>
+    <div class="footer"><span><strong>NexusHR</strong> · Portfolio documentation</span><span>Operations and reflection · 15</span></div>
+  </section>
+
+</body>
+</html>

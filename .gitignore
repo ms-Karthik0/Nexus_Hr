@@ -1,0 +1,8 @@
+node_modules/
+**/target/
+backend/bin/
+frontend/dist/
+*.log
+.env
+.env.*
+!.env.example

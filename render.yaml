@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: nexushr-api
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    healthCheckPath: /api/actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_HOST
+        fromDatabase:
+          name: nexushr-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: nexushr-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: nexushr-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: nexushr-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: nexushr-db
+          property: password
+  - type: static
+    name: nexushr-frontend
+    rootDir: ./frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: nexushr-api
+          property: url
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  - name: nexushr-db
+    plan: free
+    region: singapore
+    databaseName: nexushr
+    user: nexushr
