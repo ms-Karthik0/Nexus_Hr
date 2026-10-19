@@ -4,7 +4,11 @@ import {
   DashboardStats, NotificationItem
 } from '../types';
 
-const API_BASE = `${(import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '')}/api`;
+const configuredApiHost = import.meta.env.VITE_API_BASE_URL ?? '';
+const API_ORIGIN = configuredApiHost
+  ? `${/^https?:\/\//i.test(configuredApiHost) ? '' : 'https://'}${configuredApiHost}`.replace(/\/+$/, '')
+  : '';
+const API_BASE = `${API_ORIGIN}/api`;
 
 function getAuthHeader(): Record<string, string> {
   const token = localStorage.getItem('nexus_token');

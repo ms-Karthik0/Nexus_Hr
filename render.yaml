@@ -43,7 +43,7 @@ services:
         fromService:
           type: web
           name: nexushr-api
-          property: url
+          property: host
     routes:
       - type: rewrite
         source: /*
