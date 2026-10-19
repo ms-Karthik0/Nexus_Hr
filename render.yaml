@@ -32,8 +32,9 @@ services:
         fromDatabase:
           name: nexushr-db
           property: password
-  - type: static
+  - type: web
     name: nexushr-frontend
+    runtime: static
     rootDir: ./frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
